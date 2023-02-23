@@ -234,7 +234,7 @@ class ActivityKotlin : AppCompatActivity() {
             val databaseHelper = DatabaseHelper(this@ActivityKotlin) //making reference to database
 
             //Testing dataframe33
-            val realdata1 = dataframe33(
+            val realdata1 = data33(
                 time_33,
                 interval,
                 power,
@@ -258,7 +258,7 @@ class ActivityKotlin : AppCompatActivity() {
 
 
             //Testing dataframe35
-            val realdata2 = dataframe35(
+            val realdata2 = data35(
                 time_35,
                 dist,
                 drive_len,

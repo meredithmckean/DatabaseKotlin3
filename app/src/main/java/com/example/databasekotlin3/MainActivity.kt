@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class ActivityKotlin : AppCompatActivity() {
+    //changed
     // references of buttons and other controls on the layout
 
     lateinit var et_username: EditText

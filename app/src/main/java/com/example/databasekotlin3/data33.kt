@@ -1,6 +1,7 @@
 package com.example.databasekotlin3
 
 class data33 {
+    //changed
     var time_33 = 0.0
     var interval = 0
     var power = 0

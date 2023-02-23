@@ -1,6 +1,7 @@
 package com.example.databasekotlin3
 
 class data35 {
+    //changed
     var time_35 = 0.0
     var dist = 0.0
     var drive_len = 0.0

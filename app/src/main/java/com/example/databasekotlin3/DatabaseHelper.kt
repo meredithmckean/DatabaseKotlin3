@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
 class DatabaseHelper  //Constructor
+    //changed
     (context: Context?) :
     SQLiteOpenHelper(context, "Smart_Rower_Tables.db", null, 2) {
     //methods that must be implemented

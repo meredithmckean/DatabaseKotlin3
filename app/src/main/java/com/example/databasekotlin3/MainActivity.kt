@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+
 //import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 //import kotlinx.coroutines
 
@@ -30,6 +31,7 @@ class ActivityKotlin : AppCompatActivity() {
     lateinit var btn_delete_tables: Button
     lateinit var btn_history_error_tables: Button
     lateinit var btn_view_history_error_tables: Button
+    lateinit var btn_prediction: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) { //starts the application
@@ -402,5 +404,28 @@ class ActivityKotlin : AppCompatActivity() {
                             builder2.show();
                             res2.close();*/
         })
+
+        btn_prediction.setOnClickListener(
+            object : View.OnClickListener {
+                override fun onClick(view: View) {
+                    val db = DatabaseHelper(this@ActivityKotlin) //making reference to database
+                    val usernameTXT: String = et_username.getText().toString()
+                    val workout_type = "workout_1"
+                    val allPower: ArrayList<String> = db.getAllPower(usernameTXT, workout_type) as ArrayList<String>
+                    //Toast.makeText(MainActivity.this, allPower, Toast.LENGTH_SHORT).show();
+                    val buffer = StringBuffer()
+                    for (i in allPower.indices) {
+                        buffer.append(allPower[i] + ' ')
+                    }
+                    val builder = AlertDialog.Builder(this@ActivityKotlin)
+                    builder.setCancelable(true)
+                    builder.setTitle(usernameTXT + "Past Power")
+                    builder.setMessage(buffer.toString())
+                    builder.show()
+                }
+            })
+
+
+
     }
 }

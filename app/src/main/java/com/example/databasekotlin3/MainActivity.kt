@@ -51,6 +51,7 @@ class ActivityKotlin : AppCompatActivity() {
         btn_delete_tables = findViewById(R.id.btnDeleteTables)
         btn_history_error_tables = findViewById(R.id.btnHistoryErrorTables)
         btn_view_history_error_tables = findViewById(R.id.btnViewHistoryErrorTables)
+        btn_prediction = findViewById(R.id.btnPredictions)
 
 
         //Test Data
@@ -321,10 +322,12 @@ class ActivityKotlin : AppCompatActivity() {
             Toast.makeText(this@ActivityKotlin, "dataframe35 table Deleted", Toast.LENGTH_SHORT)
                 .show()
         })
+
+
         btn_history_error_tables.setOnClickListener(View.OnClickListener {
             val db = DatabaseHelper(this@ActivityKotlin) //making reference to database
-            val usernameTXT = et_username.getText().toString()
-            val passwordTXT = et_password.getText().toString()
+            val usernameTXT = et_username.text.toString()
+            val passwordTXT = et_password.text.toString()
 
             //Testing adding to history table
             val success1 = db.add_history(usernameTXT, workout_num, error, avg_power)
@@ -342,68 +345,61 @@ class ActivityKotlin : AppCompatActivity() {
                 ).show()
             }
 
+            //Adding multiple workouts at once
 
-            /*                //Testing adding to error table
-                            int error = 5;
-                            boolean success2 = db.add_error(usernameTXT,error);
-                            if (success2 == true){
-                                Toast.makeText(MainActivity.this, "error added to history table", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Toast.makeText(MainActivity.this, "error not added to history table", Toast.LENGTH_SHORT).show();
-                            }*/
-        })
-        btn_view_history_error_tables.setOnClickListener(View.OnClickListener {
-            val db = DatabaseHelper(this@ActivityKotlin) //making reference to database
-            val usernameTXT = et_username.getText().toString()
-            val passwordTXT = et_password.getText().toString()
-
-            //display history table user specific
-            val res = db.get_history(usernameTXT)
-            if (res.count == 0) {
-                Toast.makeText(this@ActivityKotlin, "No History Exists", Toast.LENGTH_SHORT).show()
-                res.close()
-                return@OnClickListener
+            //Testing adding to history table
+            val success2 = db.add_history(usernameTXT, "workout_1", error, avg_power)
+            if (success2 == true) {
+                Toast.makeText(
+                    this@ActivityKotlin,
+                    "workout added to history table",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@ActivityKotlin,
+                    "workout not added to history table",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            val buffer = StringBuffer()
-            while (res.moveToNext()) {
-                //buffer.append("timestamp :"+res.getString(2)+"\n");
-                //buffer.append("Workout :"+res.getString(3)+"\n");
-                buffer.append(
-                    """${res.getString(2)}    Workout :${res.getString(3)}    Error :${
-                        res.getString(
-                            4
-                        )
-                    }
-"""
-                )
+
+            //Testing adding to history table
+            val success3 = db.add_history(usernameTXT, "workout_2", error, avg_power)
+            if (success3 == true) {
+                Toast.makeText(
+                    this@ActivityKotlin,
+                    "workout added to history table",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@ActivityKotlin,
+                    "workout not added to history table",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            val builder = AlertDialog.Builder(this@ActivityKotlin)
-            builder.setCancelable(true)
-            builder.setTitle("$usernameTXT History")
-            builder.setMessage(buffer.toString())
-            builder.show()
-            res.close()
 
+            //Testing adding to history table
+            val success4 = db.add_history(usernameTXT, "workout_1", error, avg_power)
+            if (success4 == true) {
+                Toast.makeText(
+                    this@ActivityKotlin,
+                    "workout added to history table",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@ActivityKotlin,
+                    "workout not added to history table",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
-            /*                //display error table user specific
-                            Cursor res2 = db.get_error(usernameTXT);
-                            if(res2.getCount() == 0) {
-                                Toast.makeText(MainActivity.this,"No Error Exists", Toast.LENGTH_SHORT).show();
-                                res2.close();
-                                return;
-                            }
-                            StringBuffer buffer2 = new StringBuffer();
-                            while(res2.moveToNext()) {
-                                buffer2.append(res2.getString(2)+"   "+"Errors: "+res2.getString(3)+"\n");
-                            }
-                            AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
-                            builder2.setCancelable(true);
-                            builder2.setTitle(usernameTXT+" Errors");
-                            builder2.setMessage(buffer2.toString());
-                            builder2.show();
-                            res2.close();*/
         })
+
+
+
+
 
         btn_prediction.setOnClickListener(
             object : View.OnClickListener {
@@ -411,11 +407,11 @@ class ActivityKotlin : AppCompatActivity() {
                     val db = DatabaseHelper(this@ActivityKotlin) //making reference to database
                     val usernameTXT: String = et_username.getText().toString()
                     val workout_type = "workout_1"
-                    val allPower: ArrayList<String> = db.getAllPower(usernameTXT, workout_type) as ArrayList<String>
+                    val allPower: ArrayList<Double> = db.getAllPower(usernameTXT, workout_type) as ArrayList<Double>
                     //Toast.makeText(MainActivity.this, allPower, Toast.LENGTH_SHORT).show();
                     val buffer = StringBuffer()
                     for (i in allPower.indices) {
-                        buffer.append(allPower[i] + ' ')
+                        buffer.append(allPower[i].toString() + ' ')
                     }
                     val builder = AlertDialog.Builder(this@ActivityKotlin)
                     builder.setCancelable(true)

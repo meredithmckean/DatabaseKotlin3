@@ -398,6 +398,59 @@ class ActivityKotlin : AppCompatActivity() {
         })
 
 
+        btn_view_history_error_tables.setOnClickListener(View.OnClickListener {
+            val db = DatabaseHelper(this@ActivityKotlin) //making reference to database
+            val usernameTXT = et_username.text.toString()
+            val passwordTXT = et_password.text.toString()
+
+            //display history table user specific
+            val res = db.get_history(usernameTXT)
+            if (res.count == 0) {
+                Toast.makeText(this@ActivityKotlin, "No History Exists", Toast.LENGTH_SHORT).show()
+                res.close()
+                return@OnClickListener
+            }
+            val buffer = StringBuffer()
+            while (res.moveToNext()) {
+                //buffer.append("timestamp :"+res.getString(2)+"\n");
+                //buffer.append("Workout :"+res.getString(3)+"\n");
+                buffer.append(
+                    """${res.getString(2)}    Workout :${res.getString(3)}    Error :${
+                        res.getString(
+                            4
+                        )
+                    }
+"""
+                )
+            }
+            val builder = AlertDialog.Builder(this@ActivityKotlin)
+            builder.setCancelable(true)
+            builder.setTitle("$usernameTXT History")
+            builder.setMessage(buffer.toString())
+            builder.show()
+            res.close()
+
+
+            /*                //display error table user specific
+                                    Cursor res2 = db.get_error(usernameTXT);
+                                    if(res2.getCount() == 0) {
+                                        Toast.makeText(MainActivity.this,"No Error Exists", Toast.LENGTH_SHORT).show();
+                                        res2.close();
+                                        return;
+                                    }
+                                    StringBuffer buffer2 = new StringBuffer();
+                                    while(res2.moveToNext()) {
+                                        buffer2.append(res2.getString(2)+"   "+"Errors: "+res2.getString(3)+"\n");
+                                    }
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+                                    builder2.setCancelable(true);
+                                    builder2.setTitle(usernameTXT+" Errors");
+                                    builder2.setMessage(buffer2.toString());
+                                    builder2.show();
+                                    res2.close();*/
+        })
+
+
 
 
 
